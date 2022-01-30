@@ -5,6 +5,8 @@ let camera;
 let renderer;
 let scene;
 let house;
+let controls;
+
 
 function init() {
   container = document.querySelector(".scene");
@@ -44,21 +46,22 @@ function init() {
   loader.load("./house/scene.gltf", function(gltf) {
     scene.add(gltf.scene);
     house = gltf.scene.children[0];
-    animate();
-    
-  });
-  
+   });
+   controls = new THREE.OrbitControls (camera, renderer.domElement);
 }
+
 
 function animate() {
   requestAnimationFrame(animate);
   renderer.render(scene, camera);
   
+controls.update();
   house.rotation.z += 0.005;
 
 }
 
 init();
+animate();
 
 function onWindowResize() {
   camera.aspect = container.clientWidth / container.clientHeight;
